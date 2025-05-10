@@ -1,46 +1,69 @@
 const DiskVisualization = ({ title, path, totalMovement }) => {
-    return (
-      <div className="disk-visualization">
+  // Tính toán chiều rộng thực tế dựa trên max cylinder
+  const calculatePosition = (cylinder, max) => (cylinder / max) * 100;
+
+  return (
+    <div className={`disk-visualization ${title.toLowerCase()}`}>
+      <div className="header">
         <h3>{title}</h3>
-        <p>Tổng di chuyển đầu đọc: {totalMovement} cylinders</p>
-        
-        <div className="access-sequence">
-          <h4>Chuỗi truy cập:</h4>
-          <div className="sequence-grid">
-            {path.map((cylinder, index) => (
-              <span key={index} className="cylinder">{cylinder}</span>
-            ))}
-          </div>
-        </div>
-  
-        <div className="disk-track">
-          <div className="track-labels">
-            {[...Array(11)].map((_, i) => (
-              <span key={i}>{i * 500}</span>
-            ))}
-          </div>
-          <div className="track-visual">
-            {path.map((cylinder, index) => {
-              if (index === 0) return null;
-              const prevCylinder = path[index - 1];
-              const left = Math.min(prevCylinder, cylinder) / 5000 * 100;
-              const width = Math.abs(cylinder - prevCylinder) / 5000 * 100;
-              
-              return (
-                <div 
-                  key={index}
-                  className="track-movement"
-                  style={{
-                    left: `${left}%`,
-                    width: `${width}%`
-                  }}
-                ></div>
-              );
-            })}
-          </div>
+        <div className="total-movement">
+          Tổng di chuyển: <strong>{totalMovement}</strong> cylinders
         </div>
       </div>
-    );
+
+      <div className="access-sequence">
+        <div className="sequence-grid">
+          {path.map((cylinder, index) => (
+            <div key={index} className="cylinder">
+              {index > 0 && (
+                <span className="arrow">→</span>
+              )}
+              {cylinder}
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <div className="disk-track">
+        <div className="track-labels">
+          {[0, 1000, 2000, 3000, 4000, 5000].map((value) => (
+            <span key={value}>{value}</span>
+          ))}
+        </div>
+        <div className="track-visual">
+          {path.slice(1).map((cylinder, index) => {
+            const prev = path[index];
+            const left = calculatePosition(Math.min(prev, cylinder), 5000);
+            const width = calculatePosition(Math.abs(cylinder - prev), 5000);
+            
+            return (
+              <div
+                key={index}
+                className="track-segment"
+                style={{
+                  left: `${left}%`,
+                  width: `${width}%`,
+                  backgroundColor: getAlgorithmColor(title)
+                }}
+                title={`${prev} → ${cylinder} (${Math.abs(cylinder - prev)} cylinders)`}
+              />
+            );
+          })}
+        </div>
+      </div>
+    </div>
+  );
+};
+
+// Hàm phụ trợ chọn màu
+const getAlgorithmColor = (algorithm) => {
+  const colors = {
+    scan: '#e74c3c',
+    cscan: '#3498db',
+    look: '#2ecc71',
+    clook: '#9b59b6'
   };
-  
-  export default DiskVisualization;
+  return colors[algorithm.toLowerCase()] || '#4CAF50';
+};
+
+export default DiskVisualization;
