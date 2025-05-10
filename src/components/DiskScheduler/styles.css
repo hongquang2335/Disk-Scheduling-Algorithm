@@ -1,0 +1,88 @@
+.disk-scheduler {
+    font-family: Arial, sans-serif;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+  }
+  
+  .info-section {
+    background-color: #f5f5f5;
+    padding: 15px;
+    border-radius: 5px;
+    margin-bottom: 20px;
+  }
+  
+  .result-table {
+    margin: 20px 0;
+  }
+  
+  .result-table table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  .result-table th, .result-table td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+  }
+  
+  .result-table th {
+    background-color: #f2f2f2;
+  }
+  
+  .disk-visualization {
+    margin: 30px 0;
+    padding: 15px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+  }
+  
+  .sequence-grid {
+    display: grid;
+    grid-template-columns: repeat(10, 1fr);
+    gap: 5px;
+    margin: 10px 0;
+  }
+  
+  .cylinder {
+    padding: 8px;
+    text-align: center;
+    border-radius: 5px;
+    font-weight: bold;
+    /* Màu nền và chữ tương phản cao */
+    background-color: #2c3e50; /* Xanh đậm */
+    color: #ecf0f1; /* Trắng sáng */
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  }
+  
+  .disk-track {
+    margin-top: 20px;
+  }
+  
+  .track-labels {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 5px;
+  }
+  
+  .track-visual {
+    height: 30px;
+    background-color: #f0f0f0;
+    position: relative;
+    border-radius: 5px;
+  }
+  
+  .track-movement {
+    position: absolute;
+    height: 100%;
+    background-color: #4CAF50;
+    opacity: 0.7;
+    top: 0;
+  }
+  
+  .visualizations {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+  }
